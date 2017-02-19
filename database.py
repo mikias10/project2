@@ -42,12 +42,17 @@ with conn:
         cols = [desc[0] for desc in c.description]
         df = pd.DataFrame(rows, columns=cols)
 
-        warmestInJuly = df[df['warm_month'] == 'July']
+        inputMonth = sys.argv[1]
+
+        warmestInJuly = df[df['warm_month'] == inputMonth]
         warmestInJulyList = warmestInJuly.name.tolist()
-        months = ''
 
-        for index, line in enumerate(warmestInJulyList):
-            print(line)
-            months+= ', ' +line
+        if(len(warmestInJulyList) == 0):
+            print('Sorry there is no record for the input of '+ inputMonth +'.')
+        else:
+            months = ''
 
-        print('The cities that are warmest in July are' + months +'.')
+            for index, line in enumerate(warmestInJulyList):
+                months+= ', ' +line
+
+            print('The cities that are warmest in '+inputMonth+ ' are' + months +'.')
